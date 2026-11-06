@@ -28,19 +28,14 @@ overlap(slot(T1, T2), slot(T3, T4), Slot) :-
 	(later_or_equal(T1, T3), earlier_or_equal(T1, T4), later_or_equal(T2, T4), T1 \== T4, Slot = slot(T1, T4));
 	(later_or_equal(T1, T3), earlier_or_equal(T2, T4), T1 \== T2, Slot = slot(T1, T2)).
 
-overlap_a(Person1, Person2, SlotA) :-
-	free(Person1, Slot1),
-	free(Person2, Slot2),
-	overlap(Slot1, Slot2, SlotA).
-
-overlap_final(SlotA, Person3, FinalSlot) :-
-	free(Person3, Slot3),
-	overlap(SlotA, Slot3, FinalSlot).
-
+% slot times for available times 3 people can meet
 meet(Slot) :- 
 	people([P1, P2, P3]),
-	overlap_a(P1, P2, X),
-	overlap_final(X, P3, Slot).
+	free(P1, Slot1),
+	free(P2, Slot2),
+	overlap(Slot1, Slot2, SlotA),
+	free(P3, Slot3),
+	overlap(SlotA, Slot3, Slot).
 
 
 people([ann,bob,carla]).

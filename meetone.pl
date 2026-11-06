@@ -20,14 +20,15 @@ later_or_equal(T1, T2) :-
 	time_to_minutes(T2, M2),
 	M1 >= M2.
 
+% People available during a certain time slot
 meetone(Person, slot(Time1, Time2)) :- 
 	free(Person, slot(TimeA, TimeB)),
 	earlier_or_equal(TimeA, Time1),
 	later_or_equal(TimeB, Time2).
 
-main :- findall(Person,
-		meetone(Person,slot(time(8,30,am),time(8,45,am))),
-		People),
-	write(People), nl, halt.
+% main :- findall(Person,
+% 		meetone(Person,slot(time(8,30,am),time(8,45,am))),
+% 		People),
+% 	write(People), nl, halt.
 
-:- initialization(main).
+% :- initialization(main).
