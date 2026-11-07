@@ -1,6 +1,7 @@
 #!/bin/gprolog --consult-file
 
 :- include('meet.pl').
+:- include('meetone.pl').
 
 % tests time_to_minutes predicate
 test_time_to_min(Time, Total, TestName) :-
@@ -33,25 +34,33 @@ test_meetone(Slot, TestName) :-
  		People),
 	format('~w PASSED: ~w is/are available during ~w~n', [TestName, People, Slot]).
 
+%tests meet predicate 
 test_meet(P1, P2, P3, TestName) :-
 	people([P1, P2, P3]),
 	findall(Slot, meet(Slot), Slots),
         uniq(Slots, Uniq),
-	format('~w PASSED: the 3 people can meet during these time slots: ~w~n', [TestName, Uniq]).
+	format('~w PASSED: the people, ~w, can meet during these time slots: ~w~n', [TestName, [P1, P2, P3], Uniq]).
+
+% tests r_meet predicate
+test_r_meet(List, TestName) :-
+	people(List),
+	findall(Slot, r_meet(Slot), Slots),
+        uniq(Slots, Uniq),
+	format('~w PASSED: the person/people, ~w, can meet during this/these time slots: ~w~n', [TestName, List, Uniq]).
 
 
 main :- (
 	test_time_to_min(time(12, 30, am), 30, test_time_to_min),
-	test_time_to_min(time(12, 30, am), 60, test_time_to_min),
+	test_time_to_min(time(12, 30, am), 60, false_test_time_to_min),
 	test_earlier_or_equal(time(8, 30, am), time(8, 31, am), test_earlier_or_equal),
-	test_earlier_or_equal(time(10, 0, am), time(8, 30, am), test_earlier_or_equal),
+	test_earlier_or_equal(time(10, 0, am), time(8, 30, am), false_test_earlier_or_equal),
 	test_earlier_or_equal(time(12, 0, pm), time(1, 0, pm), test_earlier_or_equal),
 	test_later_or_equal(time(10, 0, am), time(8, 0, am), test_later_or_equal),
-	test_later_or_equal(time(3, 0, pm), time(5, 30, pm), test_later_or_equal),
+	test_later_or_equal(time(3, 0, pm), time(5, 30, pm), false_test_later_or_equal),
 	test_overlap(slot(time(8, 0, am), time(9, 0, am)), slot(time(7, 0, am), time(8, 30, am)), SlotA, test_overlap),
 	test_overlap(slot(time(12, 0, pm), time(12, 30, pm)), slot(time(11, 0, am), time(1, 0, pm)), SlotB, test_overlap),
 	test_overlap(slot(time(10, 0, am), time(11, 30, am)), slot(time(10, 30, am), time(12, 0, pm)), SlotC, test_overlap),
-	test_overlap(slot(time(9, 0, am), time(10, 0, am)), slot(time(2, 0, pm), time(3, 0, pm)), SlotD, test_overlap),
+	test_overlap(slot(time(9, 0, am), time(10, 0, am)), slot(time(2, 0, pm), time(3, 0, pm)), SlotD, false_test_overlap),
 	test_meetone(slot(time(8, 30, am), time(8, 45, am)), test_meetone),
 	test_meetone(slot(time(11, 0, am), time(12, 0, pm)), test_meetone),
 	test_meetone(slot(time(9, 0, pm), time(10, 0, pm)), test_meetone),

@@ -1,56 +1,37 @@
-# Project #: Project Name
+# Project 4: Prolog
 
-* Author: Your Name
-* Class: CS354 Section #
-* Semester:
+* Author: Trust Migisha
+* Class: CS354 Section 002
+* Semester: Fall 2026
 
 ## Overview
-
-Concisely explain what the program does. If this exceeds a couple of
-sentences, you're going too far. Generally you should be pulling this
-right from the project specification. I don't want you to just cut and
-paste, but paraphrase what is stated in the project specification.
+This project is written in Prolog where one program finds the people who are available to meet during a specific 
+time based off the data that represents people and their available times to meet. The other program finds one or 
+more time slots of the people given for when they can meet by finding where their available times overlap.
 
 ## Reflection
+Some things that went well was creating the predicates that compare time to confirm one is earlier than the 
+other or later than the other. After understanding the birthday.pl example from class, I felt like I was able 
+to grasp that fairly quickly until I reached the issue that my comparison logic doesn't work for 12 and 1 am/pm, 
+since 12 comes before 1 in regards to time but 1 is less than 12 as a number. That's when I got the idea of converting 
+the times to the total number of minutes from midnight and comparing those minutes instead which helped bypass that 
+problem.
 
-Write a two paragraph reflection describing your experience with this
-project.  Talk about what worked well and what was challenging.  
-Did you run into an issue that took some time to figure out?  
-Tell us about it. What did you enjoy, what was less desirable? Feel
-free to add other items (within the two paragraph limit).
+I spent a long time trying to figure out how to get when the time slots overlap for meet.pl. I mean now that I 
+am done with it, it doesn't seem like it was that difficult, but I spent hours thinking of how to format my overlap 
+predicate. Drawing a graph of how to time slots overlap definitely helped and I was able to find the different ways 
+they can overlap which I was eventually able to program. Also figuring out how the unit testing works in prolog 
+took a little bit to understand, but after realizing that we're using the predicate and then having "format" print 
+a successful test message (similar to printf in C), it was fairly smooth creating the rest of the tests.
 
 ## Compiling and Using
-
-This section should tell the user how to compile your code.  It is
-also appropriate to instruct the user how to use your code. Does your
-program require user input? If so, what does your user need to know
-about it to use it as quickly as possible?
+* In order to run meet.pl or meetone.pl, the user needs to run the command, "gprolog --consult-file {file name}" in the terminal.
+* In order to run test.pl:
+  * First, the user needs to comment out all the lines connected to the "main" fact/predicate as well as the "initialization(main)" line in both meet.pl and meetone.pl.
+  * Then, the user can run the command, "gprolog --consult-file test.pl" in the terminal.
 
 ## Results
-
-This section presents timing and other results of any experiments that
-you were asked to perform as part of the project.
+All unit tests in test.pl passed.
 
 ## Sources used
-
-If you used any sources outside of the lecture notes, class lab files,
-or text book you need to list them here. If you looked something up on
-stackoverflow.com and fail to cite it in this section it will be
-considered plagiarism and be dealt with accordingly. Be sure to include any 
-usage of Generative AI, and why you used it or what you got from it.  
-
-Finally, remove these instructions from your README.md after you are finished!
-
-----------
-
-## Notes
-
-* This README.md template is using Markdown. Here is some help on using Markdown:
-  [markdown cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
-
-
-* Markdown can be edited and viewed natively in most IDEs such as Eclipse and VS Code. Just toggle
-  between the Markdown source and preview tabs.
-
-* To preview your README.md output online, you can copy your file contents to a Markdown editor/previewer
-  such as [https://stackedit.io/editor](https://stackedit.io/editor).
+* https://learnxinyminutes.com/prolog/

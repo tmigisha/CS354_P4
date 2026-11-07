@@ -28,14 +28,27 @@ overlap(slot(T1, T2), slot(T3, T4), Slot) :-
 	(later_or_equal(T1, T3), earlier_or_equal(T1, T4), later_or_equal(T2, T4), T1 \== T4, Slot = slot(T1, T4));
 	(later_or_equal(T1, T3), earlier_or_equal(T2, T4), T1 \== T2, Slot = slot(T1, T2)).
 
-% slot times for available times 3 people can meet
-meet(Slot) :- 
+% finds available times to meet for 3 people
+meet(Slot) :-
 	people([P1, P2, P3]),
 	free(P1, Slot1),
 	free(P2, Slot2),
 	overlap(Slot1, Slot2, SlotA),
 	free(P3, Slot3),
 	overlap(SlotA, Slot3, Slot).
+
+% recursive method to get available times for any number of people to meet
+meet_people([Person], Slot) :-
+	free(Person, Slot).
+
+meet_people([Person | Rest], Slot) :-
+	free(Person, PersonSlot),
+	meet_people(Rest, RestSlot),
+	overlap(PersonSlot, RestSlot, Slot).
+
+rmeet(Slot) :-
+	people(List),
+	meet_people(List, Slot).
 
 
 people([ann,bob,carla]).
